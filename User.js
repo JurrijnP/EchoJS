@@ -21,3 +21,17 @@ function GetUsername(Id) {
 	};
 	return msg;
 };
+
+function GetUserID(Name) {
+	var msg = "";
+	for (var i = 0; i < ServerMembers.length; i++) {
+		if (ServerMembers[i]["User"]["Username"] == Name) {
+			msg = ServerMembers[i]["User"]["ID"];
+		} else if (ServerMembers[i]["Nick"] !== "") {
+			if (ServerMembers[i]["Nick"] === Name) {
+				msg = ServerMembers[i]["User"]["ID"];
+			}
+		}
+	};
+	return msg;
+};
