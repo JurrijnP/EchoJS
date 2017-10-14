@@ -70,11 +70,15 @@ function repList() {
 	});
 	var ct = 1;
 	for (var i = 0; i < byAmount.length; i++) {
-		if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
-			msg += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+		if (i > 0) {
+			if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
+				msg += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+			} else {
+				msg += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+				ct++;
+			}
 		} else {
-			msg += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
-			ct++;
+			msg += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
 		}
 	}
 	msg += "}\n}";
