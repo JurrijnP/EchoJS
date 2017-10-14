@@ -70,7 +70,7 @@ function repList() {
 	});
 	var ct = 1;
 	for (var i = 0; i < byAmount.length; i++) {
-		if (i > 0) {
+		if (i < (byAmount.length - 1)) {
 			if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
 				msg += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
 			} else {
