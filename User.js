@@ -9,17 +9,37 @@ function GetRoleName(Id) {
 };
 
 function GetUsername(Id) {
-	var msg = "";
-	for (var i = 0; i < Object.keys(ServerMembers).length; i++) {
-		if (ServerMembers[i]["User"]["ID"] === Id) {
-			if (ServerMembers[i]["Nick"] !== "") {
-				msg = ServerMembers[i]["Nick"];
-			} else {
-				msg = ServerMembers[i]["User"]["Username"];
-			};
-		};
-	};
-	return msg;
+    var msg = "";
+    var arr = [];
+    var loop = Math.floor((Object.keys(ServerMembers).length) / 100);
+    var last = (((Object.keys(ServerMembers).length) / 100) - loop) * 100;
+    var ct = 0;
+    var usr = "";
+    for (var i = 0; i < (loop + 1); i++) {
+        if (i < loop) {
+            for (var j = (0 + (100 * ct)); j < ((100 * ct) + 100); j++) {
+                arr.push(ServerMembers[j]["User"]["ID"]);
+            }
+        } else {
+            for (var j = (0 + (100 * ct)); j < ((100 * ct) + last); j++) {
+                arr.push(ServerMembers[j]["User"]["ID"]);
+            }
+        }
+        if (arr.indexOf(Id) > -1) {
+            usr = ((100 * ct) + arr.indexOf(Id));
+            break;
+        } else {
+            arr = [];
+            ct++;
+            continue;
+        }
+    }
+    if (ServerMembers[usr]["Nick"] !== "") {
+        msg = ServerMembers[usr]["Nick"];
+    } else {
+        msg = ServerMembers[usr]["User"]["Username"];
+    };
+    return msg;
 };
 
 function GetUserID(Name) {
