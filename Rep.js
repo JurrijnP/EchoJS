@@ -68,8 +68,14 @@ function repList() {
 	byAmount.sort(function(a,b) {
 		return b.Amount - a.Amount;
 	});
+	var ct = 1;
 	for (var i = 0; i < byAmount.length; i++) {
-		msg += "**" + (i + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+		if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
+			msg += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+		} else {
+			msg += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+			ct++;
+		}
 	}
 	msg += "}\n}";
 	return msg;
