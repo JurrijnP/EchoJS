@@ -68,9 +68,9 @@ function repList() {
 	byAmount.sort(function(a,b) {
 		return b.Amount - a.Amount;
 	});
-	var ct = 0;
+	var ct = 1;
 	for (var i = 0; i < byAmount.length; i++) {
-		if (i > 1) {
+		if (i > 0) {
 			if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
 				msg += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
 			} else {
