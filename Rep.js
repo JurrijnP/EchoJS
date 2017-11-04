@@ -57,7 +57,7 @@ function repBan(Type) {
     };
     if (Type === "add") {
         if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
-            var bl = JSON.parse(SupportRep.Banlist);
+            var bl = JSON.parse(SupportRep.BanList);
             if (bl.indexOf(UserID) > -1) {
                 msg += "User is already banned from the reputation system.";
             } else {
@@ -68,7 +68,7 @@ function repBan(Type) {
         }
     } else if (Type === "remove") {
         if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
-            var bl = JSON.parse(SupportRep.Banlist);
+            var bl = JSON.parse(SupportRep.BanList);
             if (bl.indexOf(UserID) > -1) {
                 bl.splice(bl.indexOf(UserID), 1);
                 SupportRep.BanList = JSON.stringify(bl);
