@@ -57,21 +57,21 @@ function repBan(Type) {
     };
     if (Type === "add") {
         if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
-            var bl = JSON.parse(SupportRep.BanList);
+            var bl = JSON.parse(SupportRep["BanList"]);
             if (bl.indexOf(UserID) > -1) {
                 msg += "User is already banned from the reputation system.";
             } else {
                 bl.push(UserID);
-                SupportRep.BanList = JSON.stringify(bl);
+                SupportRep["BanList"] = JSON.stringify(bl);
                 msg += "User has been banned from the reputation system.";
             }
         }
     } else if (Type === "remove") {
         if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
-            var bl = JSON.parse(SupportRep.BanList);
+            var bl = JSON.parse(SupportRep["BanList"]);
             if (bl.indexOf(UserID) > -1) {
                 bl.splice(bl.indexOf(UserID), 1);
-                SupportRep.BanList = JSON.stringify(bl);
+                SupportRep["BanList"] = JSON.stringify(bl);
                 msg += "User can now use the reputation system again.";
             } else {
                 msg += "User could not be found in the list of people that have been banned from the reputation system.";
