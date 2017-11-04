@@ -92,9 +92,9 @@ function banList() {
         msg += "*Users that are banned from the reputation system:*```";
         for (var i = 0; i < bl.length; i++) {
             if ((i + 1) < bl.length) {
-                msg += GetUserName(bl[i]) + ", ";
+                msg += GetUsername(bl[i]) + ", ";
             } else {
-                msg += GetUserName(bl[i]);
+                msg += GetUsername(bl[i]);
             }
         }
         msg += "```";
