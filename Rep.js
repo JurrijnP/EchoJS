@@ -54,19 +54,16 @@ function repBan(Type) {
     var msg = "";
 	if (RawUserID === UserID) {
 		msg += "Please mention somebody";
-        return msg;
     };
     if (Type === "add") {
         if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
             var bl = JSON.parse(SupportRep.Banlist);
             if (bl.indexOf(UserID) > -1) {
                 msg += "User is already banned from the reputation system.";
-                return msg;
             } else {
                 bl.push(UserID);
                 SupportRep.BanList = JSON.stringify(bl);
                 msg += "User has been banned from the reputation system.";
-                return msg;
             }
         }
     } else if (Type === "remove") {
@@ -76,13 +73,12 @@ function repBan(Type) {
                 bl.splice(bl.indexOf(UserID), 1);
                 SupportRep.BanList = JSON.stringify(bl);
                 msg += "User can now use the reputation system again.";
-                return msg;
             } else {
                 msg += "User could not be found in the list of people that have been banned from the reputation system.";
-                return msg;
             }
         }
     }
+    return msg;
 };
 
 function repList() {
