@@ -2,6 +2,8 @@ function posRep(RawID) {
 	msg = "";
 	if (RawID === UserID) {
 		msg += "Please mention somebody";
+	} else if (JSON.parse(SupportRep["BanList"]).indexOf(RawUserID) > -1) {
+        msg += "You are not allowed to use this.";
 	} else if (MemberHasRole(UserID, "Support") === false) {
 		msg += "Please mention a support member.";
 	} else if (MemberHasRole(UserID, "Support") === true && MemberHasRole(UserID, "Admin") === false) {
@@ -28,6 +30,8 @@ function negRep(RawID) {
 	msg = "";
 	if (RawID === UserID) {
 		msg += "Please mention somebody";
+	} else if (JSON.parse(SupportRep["BanList"]).indexOf(RawUserID) > -1) {
+        msg += "You are not allowed to use this.";
 	} else if (MemberHasRole(UserID, "Support") === false) {
 		msg += "Please mention a support member.";
 	} else if (MemberHasRole(UserID, "Support") === true && MemberHasRole(UserID, "Admin") === false) {
