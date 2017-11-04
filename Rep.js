@@ -50,8 +50,44 @@ function negRep(RawID) {
 	return msg;
 }
 
+function repBan(Type) {
+    var msg = "";
+	if (RawUserID === UserID) {
+		msg += "Please mention somebody";
+        return msg;
+    };
+    if (Type === "add") {
+        if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
+            var bl = JSON.parse(SupportRep.Banlist);
+            if (bl.indexOf(UserID) > -1) {
+                msg += "User is already banned from the reputation system.";
+                return msg;
+            } else {
+                bl.push(UserID);
+                SupportRep.BanList = JSON.stringify(bl);
+                msg += "User has been banned from the reputation system.";
+                return msg;
+            }
+        }
+    } else if (Type === "remove") {
+        if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
+            var bl = JSON.parse(SupportRep.Banlist);
+            if (bl.indexOf(UserID) > -1) {
+                bl.splice(bl.indexOf(UserID), 1);
+                SupportRep.BanList = JSON.stringify(bl);
+                msg += "User can now use the reputation system again.";
+                return msg;
+            } else {
+                msg += "User could not be found in the list of people that have been banned from the reputation system.";
+                return msg;
+            }
+        }
+    }
+};
+
 function repList() {
 	var obj = sortObject(SupportRep);
+    delete obj.BanList;
 	for (var i = 0; i < Object.keys(obj).length; i++) {
 		var ID = Object.keys(obj)[i];
 		obj[ID] = prs(obj[ID]);
@@ -68,18 +104,8 @@ function repList() {
 	byAmount.sort(function(a,b) {
 		return b.Amount - a.Amount;
 	});
-	var ct = 1;
 	for (var i = 0; i < byAmount.length; i++) {
-		if (i > 0) {
-			if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
-				msg += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
-			} else {
-				msg += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
-				ct++;
-			}
-		} else {
-			msg += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
-		}
+		msg += "**" + (i + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
 	}
 	msg += "}\n}";
 	return msg;
