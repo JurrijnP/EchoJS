@@ -85,6 +85,25 @@ function repBan(Type) {
     return msg;
 };
 
+function banList() {
+    var msg = "";
+    var bl = JSON.parse(SupportRep["BanList"]);
+    if (bl.length > 0) {
+        msg += "*Users that are banned from the reputation system:*```";
+        for (var i = 0; i < bl.length; i++) {
+            if ((i + 1) < bl.length) {
+                msg += GetUserName(bl[i]) + ", ";
+            } else {
+                msg += GetUserName(bl[i]);
+            }
+        }
+        msg += "```";
+    } else {
+        msg += "No users have been banned from the reputation system.";
+    }
+    return msg;
+}
+
 function repList() {
 	var obj = sortObject(SupportRep);
     delete obj.BanList;
