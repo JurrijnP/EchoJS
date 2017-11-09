@@ -1,0 +1,221 @@
+&.tictactoe={init}
+String.{/rawid} == {rawid}?:Mention the User you want to play Tic Tac Toe with.
+Response.nil?:{ars:makeTTTData}
+[#CONTINUE#]
+makeTTTData={init}
+{arslock}
+Let's playe some Tic Tac Toe!
+(UL = UpperLeft, MM = MiddleMiddle etc...)
+String.{randtext:{/rawid},{rawid}} == {/rawid}?:{self} is allowed to start and is {randlist:❌,⭕}. Type: `ttt?place <UL/UM/UR/ML/MM/MR/LL/LM/LR>`
+String.{randtext:{/rawid},{rawid}} == {rawid}?:{/user} is allowed to start and is {randlist:⭕,❌}. Type: `ttt?place <UL/UM/UR/ML/MM/MR/LL/LM/LR>`
+{m?ttt:{/rawid}-PW} := {rawid}
+{m?ttt:{rawid}-PW} := {/rawid}
+{m?ttt:{/rawid}-UL} := ❓
+{m?ttt:{/rawid}-UM} := ❓
+{m?ttt:{/rawid}-UR} := ❓
+{m?ttt:{/rawid}-ML} := ❓
+{m?ttt:{/rawid}-MM} := ❓
+{m?ttt:{/rawid}-MR} := ❓
+{m?ttt:{/rawid}-LL} := ❓
+{m?ttt:{/rawid}-LM} := ❓
+{m?ttt:{/rawid}-LR} := ❓
+{m?ttt:{rawid}-UL} := ❓
+{m?ttt:{rawid}-UM} := ❓
+{m?ttt:{rawid}-UR} := ❓
+{m?ttt:{rawid}-ML} := ❓
+{m?ttt:{rawid}-MM} := ❓
+{m?ttt:{rawid}-MR} := ❓
+{m?ttt:{rawid}-LL} := ❓
+{m?ttt:{rawid}-LM} := ❓
+{m?ttt:{rawid}-LR} := ❓
+{m?ttt:{/rawid}-Turn} := {randlist:{/rawid},{rawid}}
+{m?ttt:{/rawid}-C} := {randlist:❌,⭕}
+{m?ttt:{rawid}-C} := {randlist:⭕,❌}
+{m?ttt:{rawid}-Turn} := {randlist:{/rawid},{rawid}}
+[#CONTINUE#]
+&ttt?place {params}={init}
+String.{r?ttt:{/rawid}-Turn} == {/rawid}?:{ars:TTTCheckPosition}
+String.{r?ttt:{/rawid}-Turn} != {/rawid}?:It is not your turn!
+Response.nil?:{stop}
+[#CONTINUE#]
+TTTCheckPosition={init}
+{arslock}
+Params.UL?:{ars:TTTcheckUL}
+Params.UM?:{ars:TTTcheckUM}
+Params.UR?:{ars:TTTcheckUR}
+Params.ML?:{ars:TTTcheckML}
+Params.MM?:{ars:TTTcheckMM}
+Params.MR?:{ars:TTTcheckMR}
+Params.LL?:{ars:TTTcheckLL}
+Params.LM?:{ars:TTTcheckLM}
+Params.LR?:{ars:TTTcheckLR}
+Response.nil?:Choose from: `UL/UM/UR/ML/MM/MR/LL/LM/LR`
+[#CONTINUE#]
+TTTcheckUL={init}
+{arslock}
+String.{r?ttt:{/rawid}-UL} == ❓?:{ars:TTTplaceUL}
+Response.nil?:Somebody has already set a {r?ttt:{/rawid}-UL} there!
+[#CONTINUE#]
+TTTcheckUM={init}
+{arslock}
+String.{r?ttt:{/rawid}-UM} == ❓?:{ars:TTTplaceUM}
+Response.nil?:Somebody has already set a {r?ttt:{/rawid}-UM} there!
+[#CONTINUE#]
+TTTcheckUR={init}
+{arslock}
+String.{r?ttt:{/rawid}-UR} == ❓?:{ars:TTTplaceUR}
+Response.nil?:Somebody has already set a {r?ttt:{/rawid}-UR} there!
+[#CONTINUE#]
+TTTcheckML={init}
+{arslock}
+String.{r?ttt:{/rawid}-ML} == ❓?:{ars:TTTplaceML}
+Response.nil?:Somebody has already set a {r?ttt:{/rawid}-ML} there!
+[#CONTINUE#]
+TTTcheckMM={init}
+{arslock}
+String.{r?ttt:{/rawid}-MM} == ❓?:{ars:TTTplaceMM}
+Response.nil?:Somebody has already set a {r?ttt:{/rawid}-MM} there!
+[#CONTINUE#]
+TTTcheckMR={init}
+{arslock}
+String.{r?ttt:{/rawid}-MR} == ❓?:{ars:TTTplaceMR}
+Response.nil?:Somebody has already set a {r?ttt:{/rawid}-MR} there!
+[#CONTINUE#]
+TTTcheckLL={init}
+{arslock}
+String.{r?ttt:{/rawid}-LL} == ❓?:{ars:TTTplaceLL}
+Response.nil?:Somebody has already set a {r?ttt:{/rawid}-LL} there!
+[#CONTINUE#]
+TTTcheckLM={init}
+{arslock}
+String.{r?ttt:{/rawid}-LM} == ❓?:{ars:TTTplaceLM}
+Response.nil?:Somebody has already set a {r?ttt:{/rawid}-LM} there!
+[#CONTINUE#]
+TTTcheckLR={init}
+{arslock}
+String.{r?ttt:{/rawid}-LR} == ❓?:{ars:TTTplaceLR}
+Response.nil?:Somebody has already set a {r?ttt:{/rawid}-LR} there!
+[#CONTINUE#]
+TTTplaceUL={init}
+{arslock}
+You have placed a {r?ttt:{/rawid}-C} in the Upper Left!
+{m?ttt:{/rawid}-UL} := {r?ttt:{/rawid}-C}
+{m?ttt:{r?ttt:{/rawid}-PW}-UL} := {r?ttt:{/rawid}-C}
+{ars:TTTdrawBoard}
+[#CONTINUE#]
+TTTplaceUM={init}
+{arslock}
+You have placed a {r?ttt:{/rawid}-C} in the Upper Middle!
+{m?ttt:{/rawid}-UM} := {r?ttt:{/rawid}-C}
+{m?ttt:{r?ttt:{/rawid}-PW}-UM} := {r?ttt:{/rawid}-C}
+{ars:TTTdrawBoard}
+[#CONTINUE#]
+TTTplaceUR={init}
+{arslock}
+You have placed a {r?ttt:{/rawid}-C} in the Upper Right!
+{m?ttt:{/rawid}-UR} := {r?ttt:{/rawid}-C}
+{m?ttt:{r?ttt:{/rawid}-PW}-UR} := {r?ttt:{/rawid}-C}
+{ars:TTTdrawBoard}
+[#CONTINUE#]
+TTTplaceML={init}
+{arslock}
+You have placed a {r?ttt:{/rawid}-C} on the Middle Left!
+{m?ttt:{/rawid}-ML} := {r?ttt:{/rawid}-C}
+{m?ttt:{r?ttt:{/rawid}-PW}-ML} := {r?ttt:{/rawid}-C}
+{ars:TTTdrawBoard}
+[#CONTINUE#]
+TTTplaceMM={init}
+{arslock}
+You have placed a {r?ttt:{/rawid}-C} in the Middle!
+{m?ttt:{/rawid}-MM} := {r?ttt:{/rawid}-C}
+{m?ttt:{r?ttt:{/rawid}-PW}-MM} := {r?ttt:{/rawid}-C}
+{ars:TTTdrawBoard}
+[#CONTINUE#]
+TTTplaceMR={init}
+{arslock}
+You have placed a {r?ttt:{/rawid}-C} on the Middle Right!
+{m?ttt:{/rawid}-MR} := {r?ttt:{/rawid}-C}
+{m?ttt:{r?ttt:{/rawid}-PW}-MR} := {r?ttt:{/rawid}-C}
+{ars:TTTdrawBoard}
+[#CONTINUE#]
+TTTplaceLL={init}
+{arslock}
+You have placed a {r?ttt:{/rawid}-C} in the Lower Left!
+{m?ttt:{/rawid}-LL} := {r?ttt:{/rawid}-C}
+{m?ttt:{r?ttt:{/rawid}-PW}-LL} := {r?ttt:{/rawid}-C}
+{ars:TTTdrawBoard}
+[#CONTINUE#]
+TTTplaceLM={init}
+{arslock}
+You have placed a {r?ttt:{/rawid}-C} in the Lower Middle!
+{m?ttt:{/rawid}-LM} := {r?ttt:{/rawid}-C}
+{m?ttt:{r?ttt:{/rawid}-PW}-LM} := {r?ttt:{/rawid}-C}
+{ars:TTTdrawBoard}
+[#CONTINUE#]
+TTTplaceLR={init}
+{arslock}
+You have placed a {r?ttt:{/rawid}-C} in the Lower Right!
+{m?ttt:{/rawid}-LR} := {r?ttt:{/rawid}-C}
+{m?ttt:{r?ttt:{/rawid}-PW}-LR} := {r?ttt:{/rawid}-C}
+{ars:TTTdrawBoard}
+[#CONTINUE#]
+TTTdrawBoard={init}
+{arslock}
+{r?ttt:{/rawid}-UL}{r?ttt:{/rawid}-UM}{r?ttt:{/rawid}-UR}
+{r?ttt:{/rawid}-ML}{r?ttt:{/rawid}-MM}{r?ttt:{/rawid}-MR}
+{r?ttt:{/rawid}-LL}{r?ttt:{/rawid}-LM}{r?ttt:{/rawid}-LR}
+{ars:TTTcheckRow}
+[#CONTINUE#]
+TTTcheckRow={init}
+{arslock}
+String.{r?ttt:{/rawid}-UL}{r?ttt:{/rawid}-UM}{r?ttt:{/rawid}-UR} == {r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}?:{self} has won!{ars:TTTdeleteData}
+String.{r?ttt:{/rawid}-ML}{r?ttt:{/rawid}-MM}{r?ttt:{/rawid}-MR} == {r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}?:{self} has won!{ars:TTTdeleteData}
+String.{r?ttt:{/rawid}-LL}{r?ttt:{/rawid}-LM}{r?ttt:{/rawid}-LR} == {r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}?:{self} has won!{ars:TTTdeleteData}
+String.{r?ttt:{/rawid}-UL}{r?ttt:{/rawid}-ML}{r?ttt:{/rawid}-LL} == {r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}?:{self} has won!{ars:TTTdeleteData}
+String.{r?ttt:{/rawid}-UM}{r?ttt:{/rawid}-MM}{r?ttt:{/rawid}-LM} == {r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}?:{self} has won!{ars:TTTdeleteData}
+String.{r?ttt:{/rawid}-UR}{r?ttt:{/rawid}-MR}{r?ttt:{/rawid}-LR} == {r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}?:{self} has won!{ars:TTTdeleteData}
+String.{r?ttt:{/rawid}-UL}{r?ttt:{/rawid}-MM}{r?ttt:{/rawid}-LR} == {r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}?:{self} has won!{ars:TTTdeleteData}
+String.{r?ttt:{/rawid}-LL}{r?ttt:{/rawid}-MM}{r?ttt:{/rawid}-UR} == {r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}{r?ttt:{/rawid}-C}?:{self} has won!{ars:TTTdeleteData}
+String.{r?ttt:{/rawid}-UL} == ❓?:{ars:TTTchangeTurn}
+String.{r?ttt:{/rawid}-UM} == ❓?:{ars:TTTchangeTurn}
+String.{r?ttt:{/rawid}-UR} == ❓?:{ars:TTTchangeTurn}
+String.{r?ttt:{/rawid}-ML} == ❓?:{ars:TTTchangeTurn}
+String.{r?ttt:{/rawid}-MM} == ❓?:{ars:TTTchangeTurn}
+String.{r?ttt:{/rawid}-MR} == ❓?:{ars:TTTchangeTurn}
+String.{r?ttt:{/rawid}-LL} == ❓?:{ars:TTTchangeTurn}
+String.{r?ttt:{/rawid}-LM} == ❓?:{ars:TTTchangeTurn}
+String.{r?ttt:{/rawid}-LR} == ❓?:{ars:TTTchangeTurn}
+Response.nil?:Nobody won!{ars:TTTdeleteData}
+[#CONTINUE#]
+TTTchangeTurn={init}
+{arslock}
+{m?ttt:{r?ttt:{/rawid}-PW}-Turn} := {r?ttt:{/rawid}-PW}
+{m?ttt:{/rawid}-Turn} := {r?ttt:{/rawid}-PW}
+It is now the turn of <@{r?ttt:{/rawid}-PW}>.
+[#CONTINUE#]
+TTTdeleteData={init}
+{arslock}
+{d?ttt:{r?ttt:{/rawid}-PW}-PW}
+{d?ttt:{r?ttt:{/rawid}-PW}-C}
+{d?ttt:{r?ttt:{/rawid}-PW}-UL}
+{d?ttt:{r?ttt:{/rawid}-PW}-UM}
+{d?ttt:{r?ttt:{/rawid}-PW}-UR}
+{d?ttt:{r?ttt:{/rawid}-PW}-ML}
+{d?ttt:{r?ttt:{/rawid}-PW}-MM}
+{d?ttt:{r?ttt:{/rawid}-PW}-MR}
+{d?ttt:{r?ttt:{/rawid}-PW}-LL}
+{d?ttt:{r?ttt:{/rawid}-PW}-LM}
+{d?ttt:{r?ttt:{/rawid}-PW}-LR}
+{d?ttt:{r?ttt:{/rawid}-PW}-Turn}
+{d?ttt:{/rawid}-PW}
+{d?ttt:{/rawid}-C}
+{d?ttt:{/rawid}-UL}
+{d?ttt:{/rawid}-UM}
+{d?ttt:{/rawid}-UR}
+{d?ttt:{/rawid}-ML}
+{d?ttt:{/rawid}-MM}
+{d?ttt:{/rawid}-MR}
+{d?ttt:{/rawid}-LL}
+{d?ttt:{/rawid}-LM}
+{d?ttt:{/rawid}-LR}
+{d?ttt:{/rawid}-Turn}
