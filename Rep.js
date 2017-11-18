@@ -125,7 +125,7 @@ function repListLength() {
 }
 
 function repList() {
-	var obj = sortObject(Rep);
+    var obj = sortObject(Rep);
     delete obj.BanList;
     delete obj.rll;
 	for (var i = 0; i < Object.keys(obj).length; i++) {
@@ -173,5 +173,5 @@ function repList() {
             lb++;
         }
     }
-	return msg;
+	return emb;
 }
