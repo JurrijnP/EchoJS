@@ -160,7 +160,7 @@ function repList() {
     }
     var ct = 1;
 	for (var i = 0; i < lb; i++) {
-        if (i > 0) {
+        if (i > 1) {
             if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
                 emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
                 lb++;
