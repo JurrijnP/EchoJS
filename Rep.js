@@ -1,53 +1,53 @@
-function posRep(RawID) {
+function posRep() {
 	msg = "";
-	if (RawID === UserID) {
-		msg += "Please mention somebody";
+	if (RawUserID === UserID) {
+		msg += "Please mention somebody.";
 	} else if (JSON.parse(SupportRep["BanList"]).indexOf(RawUserID) > -1) {
         msg += "You are not allowed to use this.";
-	} else if (MemberHasRole(UserID, "Support") === false) {
-		msg += "Please mention a support member.";
-	} else if (MemberHasRole(UserID, "Support") === true && MemberHasRole(UserID, "Admin") === false) {
+	} else if (isBot() === true) {
+		msg += "Bots don't like reputation sorry.";
+	} else {
 		var d = new Date();
-		if (SupportRep[UserID]) {
+		if (Rep.hasOwnProperty(UserID)) {
 			var obj = {
-				"Amount": (prs(SupportRep[UserID])["Amount"] + 15),
+				"Amount": (prs(Rep[UserID])["Amount"] + 15),
 				"Time": d.toString()
 			};
-			SupportRep[UserID] = str(obj);
+			Rep[UserID] = str(obj);
 		} else {
 			var obj = {
 				"Amount": 15,
 				"Time": d.toString()
 			};
-			SupportRep[UserID] = str(obj);
+			Rep[UserID] = str(obj);
 		}
 		msg += "You have given <@" + UserID + "> 15 reputation points!";
 	}
 	return msg;
 }
 
-function negRep(RawID) {
+function negRep() {
 	msg = "";
-	if (RawID === UserID) {
-		msg += "Please mention somebody";
+	if (RawUserID === UserID) {
+		msg += "Please mention somebody.";
 	} else if (JSON.parse(SupportRep["BanList"]).indexOf(RawUserID) > -1) {
         msg += "You are not allowed to use this.";
-	} else if (MemberHasRole(UserID, "Support") === false) {
-		msg += "Please mention a support member.";
-	} else if (MemberHasRole(UserID, "Support") === true && MemberHasRole(UserID, "Admin") === false) {
+	} else if (isBot() === true) {
+		msg += "Bots don't like reputation sorry.";
+	} else {
 		var d = new Date();
-		if (SupportRep[UserID]) {
+		if (Rep.hasOwnProperty(UserID)) {
 			var obj = {
-				"Amount": (prs(SupportRep[UserID])["Amount"] - 15),
+				"Amount": (prs(Rep[UserID])["Amount"] - 15),
 				"Time": d.toString()
 			};
-			SupportRep[UserID] = str(obj);
+			Rep[UserID] = str(obj);
 		} else {
 			var obj = {
 				"Amount": -15,
 				"Time": d.toString()
 			};
-			SupportRep[UserID] = str(obj);
+			Rep[UserID] = str(obj);
 		}
 		msg += "You have taken 15 reputation points from <@" + UserID + ">.";
 	}
@@ -61,21 +61,21 @@ function repBan(Type) {
     };
     if (Type === "add") {
         if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
-            var bl = JSON.parse(SupportRep["BanList"]);
+            var bl = JSON.parse(Rep["BanList"]);
             if (bl.indexOf(UserID) > -1) {
                 msg += "User is already banned from the reputation system.";
             } else {
                 bl.push(UserID);
-                SupportRep["BanList"] = JSON.stringify(bl);
+                Rep["BanList"] = JSON.stringify(bl);
                 msg += "User has been banned from the reputation system.";
             }
         }
     } else if (Type === "remove") {
         if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
-            var bl = JSON.parse(SupportRep["BanList"]);
+            var bl = JSON.parse(Rep["BanList"]);
             if (bl.indexOf(UserID) > -1) {
                 bl.splice(bl.indexOf(UserID), 1);
-                SupportRep["BanList"] = JSON.stringify(bl);
+                Rep["BanList"] = JSON.stringify(bl);
                 msg += "User can now use the reputation system again.";
             } else {
                 msg += "User could not be found in the list of people that have been banned from the reputation system.";
@@ -87,14 +87,14 @@ function repBan(Type) {
 
 function banList() {
     var msg = "";
-    var bl = JSON.parse(SupportRep["BanList"]);
+    var bl = JSON.parse(Rep["BanList"]);
     if (bl.length > 0) {
         msg += "*Users that are banned from the reputation system:*```";
         for (var i = 0; i < bl.length; i++) {
             if ((i + 1) < bl.length) {
-                msg += GetUsername(bl[i]) + ", ";
+                msg += GetUserName(bl[i]) + ", ";
             } else {
-                msg += GetUsername(bl[i]);
+                msg += GetUserName(bl[i]);
             }
         }
         msg += "```";
@@ -104,9 +104,30 @@ function banList() {
     return msg;
 }
 
+function repListLength() {
+    if (MemberHasRole(RawUserID, "Management") === true) {
+        if (Params.length === 0) {
+            resp = "Insert a number you fool.";
+        } else if (RegExp("[^0-9]+", "g").test(Params)) {
+            if (Params.toLowerCase() === "everybody") {
+                Rep.rll = "Everybody";
+                resp = "Everybody will be shown.";
+            } else {
+                resp = "Only numbers, idiot.";
+            }
+        } else if (prs(Params) < 1) {
+            resp = "How can I show nothing or a negative amount???";
+        } else {
+            Rep.rll = Params;
+            resp = "Replist will now show the *Top " + Params + "*";
+        }
+    }
+}
+
 function repList() {
-	var obj = sortObject(SupportRep);
+	var obj = sortObject(Rep);
     delete obj.BanList;
+    delete obj.rll;
 	for (var i = 0; i < Object.keys(obj).length; i++) {
 		var ID = Object.keys(obj)[i];
 		obj[ID] = prs(obj[ID]);
@@ -114,7 +135,8 @@ function repList() {
 	};
 	var arr = [];
 	var Names = [];
-	var msg = "{embed:\n{type:rich}{desc:\n";
+    var emb = {};
+    emb.type = "rich";
 	for (var i = 0; i < Object.keys(obj).length; i++) {
 		var ID = Object.keys(obj)[i];
 		arr.push(obj[ID]);
@@ -123,9 +145,33 @@ function repList() {
 	byAmount.sort(function(a,b) {
 		return b.Amount - a.Amount;
 	});
-	for (var i = 0; i < byAmount.length; i++) {
-		msg += "**" + (i + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
-	}
-	msg += "}\n}";
+    var lb = 0;
+    if (Rep.hasOwnProperty("rll")) {
+        if (Rep.rll === "Everybody") {
+            lb = Object.keys(Database).length;
+        } else if (Object.keys(Database).length < JSON.parse(Rep.rll)) {
+            lb = Object.keys(Database).length;
+        } else {
+            lb = JSON.parse(Rep.rll);
+            emb.title = "Showing *Top" + lb +"*:";
+        }
+    } else {
+        lb = Object.keys(Database).length;
+    }
+    var ct = 1;
+	for (var i = 0; i < lb; i++) {
+        if (i > 0) {
+            if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
+                emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                lb++;
+            } else {
+                emb.description += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                ct++;
+            }
+        } else {
+            emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+            lb++;
+        }
+    }
 	return msg;
 }
