@@ -148,15 +148,15 @@ function repList() {
     var lb = 0;
     if (Rep.hasOwnProperty("rll")) {
         if (Rep.rll === "Everybody") {
-            lb = Object.keys(Database).length;
-        } else if (Object.keys(Database).length < JSON.parse(Rep.rll)) {
-            lb = Object.keys(Database).length;
+            lb = Object.keys(obj).length;
+        } else if (Object.keys(obj).length < JSON.parse(Rep.rll)) {
+            lb = Object.keys(obj).length;
         } else {
             lb = JSON.parse(Rep.rll);
             emb.title = "Showing *Top" + lb +"*:";
         }
     } else {
-        lb = Object.keys(Database).length;
+        lb = Object.keys(obj).length;
     }
     var ct = 1;
 	for (var i = 0; i < lb; i++) {
