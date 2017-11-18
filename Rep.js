@@ -105,23 +105,25 @@ function banList() {
 }
 
 function repListLength() {
+    var msg = "";
     if (MemberHasRole(RawUserID, "Management") === true) {
         if (Params.length === 0) {
-            resp = "Insert a number you fool.";
+            msg = "Insert a number you fool.";
         } else if (RegExp("[^0-9]+", "g").test(Params)) {
             if (Params.toLowerCase() === "everybody") {
                 Rep.rll = "Everybody";
-                resp = "Everybody will be shown.";
+                msg = "Everybody will be shown.";
             } else {
-                resp = "Only numbers, idiot.";
+                msg = "Only numbers, idiot.";
             }
         } else if (prs(Params) < 1) {
-            resp = "How can I show nothing or a negative amount???";
+            msg = "How can I show nothing or a negative amount???";
         } else {
             Rep.rll = Params;
-            resp = "Replist will now show the *Top " + Params + "*";
+            msg = "Replist will now show the *Top " + Params + "*";
         }
     }
+    return msg;
 }
 
 function repList() {
