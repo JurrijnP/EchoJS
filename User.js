@@ -8,6 +8,14 @@ function GetRoleName(Id) {
   return Role;
 };
 
+function isBot() {
+    for (i = 0; i < Object.keys(ServerMembers).length; i++) {
+        if (ServerMembers[i].User.ID === UserID) {
+            return ServerMembers[i].User.Bot;
+        }
+    }
+}
+
 function GetUsername(Id) {
     var msg = "";
     var arr = [];
