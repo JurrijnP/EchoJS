@@ -2,7 +2,7 @@ function posRep() {
 	msg = "";
 	if (RawUserID === UserID) {
 		msg += "Please mention somebody.";
-	} else if (JSON.parse(SupportRep["BanList"]).indexOf(RawUserID) > -1) {
+	} else if (JSON.parse(Rep["BanList"]).indexOf(RawUserID) > -1) {
         msg += "You are not allowed to use this.";
 	} else if (isBot() === true) {
 		msg += "Bots don't like reputation sorry.";
@@ -30,7 +30,7 @@ function negRep() {
 	msg = "";
 	if (RawUserID === UserID) {
 		msg += "Please mention somebody.";
-	} else if (JSON.parse(SupportRep["BanList"]).indexOf(RawUserID) > -1) {
+	} else if (JSON.parse(Rep["BanList"]).indexOf(RawUserID) > -1) {
         msg += "You are not allowed to use this.";
 	} else if (isBot() === true) {
 		msg += "Bots don't like reputation sorry.";
