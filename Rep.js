@@ -134,7 +134,12 @@ function repList() {
         for (var i = 0; i < Object.keys(obj).length; i++) {
             var ID = Object.keys(obj)[i];
             obj[ID] = prs(obj[ID]);
-            obj[ID]["Name"] = GetUsername(ID);
+            if (GetUsername(ID) !== null) {
+                obj[ID]["Name"] = GetUsername(ID);
+            } else {
+                delete Rep[ID];
+                delete obj[ID];
+            };
         };
         var arr = [];
         var Names = [];
@@ -162,19 +167,34 @@ function repList() {
             lb = Object.keys(obj).length;
         }
         var ct = 1;
+        var ctn = 0;
         for (var i = 0; i < lb; i++) {
-            if (i > 0) {
-                if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
-                    emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+            if (byAmount[i]["Amount"] > 0) {
+                if (i > 0) {
+                    if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
+                        emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                    } else {
+                        emb.description += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                        ct++;
+                    }
                 } else {
-                    emb.description += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
-                    ct++;
+                    emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
                 }
             } else {
-                emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                ctn++;
             }
         }
-        return emb;
+        if (emb.description.length > 0) {
+            if (ctn > 0) {
+                if (emb.description.length > 0) {
+                    emb.description += "\n*People with 0 reputation points are not shown.*"
+                }
+            }
+            return emb;
+        } else {
+            var msg = "I couldn't find any users yet in the database."
+            return msg;
+        }
     } else {
         var msg = "I couldn't find any users yet in the database."
         return msg;
