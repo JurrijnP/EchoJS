@@ -8,19 +8,13 @@ function GetRoleName(Id) {
   return Role;
 };
 
-function isBot() {
-    for (i = 0; i < Object.keys(ServerMembers).length; i++) {
-        if (ServerMembers[i].User.ID === UserID) {
-            return ServerMembers[i].User.Bot;
-        }
-    }
-}
-
 function GetUsername(Id) {
     var msg = "";
     var arr = [];
     var loop = Math.floor((Object.keys(ServerMembers).length) / 100);
-    var last = (((Object.keys(ServerMembers).length) / 100) - loop) * 100;
+    var last = Math.floor((((Object.keys(ServerMembers).length) / 100) - loop) * 100);
+    //msg += "loop: " + loop + "\nlast: " + last;
+    //return msg;
     var ct = 0;
     var usr = "";
     for (var i = 0; i < (loop + 1); i++) {
@@ -42,12 +36,18 @@ function GetUsername(Id) {
             continue;
         }
     }
-    if (ServerMembers[usr]["Nick"] !== "") {
-        msg = ServerMembers[usr]["Nick"];
+    //msg += "```" + loop + "\n" + ct + "\n" + usr + "```";
+    //return msg;
+    if (usr !== "") {
+        if (ServerMembers[usr]["Nick"] !== "") {
+            msg = ServerMembers[usr]["Nick"];
+        } else {
+            msg = ServerMembers[usr]["User"]["Username"];
+        };
+        return msg;
     } else {
-        msg = ServerMembers[usr]["User"]["Username"];
-    };
-    return msg;
+        return null;
+    }
 };
 
 function GetUserID(Name) {
