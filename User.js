@@ -1,3 +1,11 @@
+function isBot() {
+    for (i = 0; i < Object.keys(ServerMembers).length; i++) {
+        if (ServerMembers[i].User.ID === UserID) {
+            return ServerMembers[i].User.Bot;
+        }
+    }
+}
+
 function GetRoleName(Id) {
   var Role = "";
   for (var i = 0; i < ServerRoles.length; i++) {
