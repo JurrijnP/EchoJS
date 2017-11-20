@@ -127,53 +127,56 @@ function repListLength() {
 }
 
 function repList() {
-    var obj = sortObject(Rep);
-    delete obj.BanList;
-    delete obj.rll;
-	for (var i = 0; i < Object.keys(obj).length; i++) {
-		var ID = Object.keys(obj)[i];
-		obj[ID] = prs(obj[ID]);
-		obj[ID]["Name"] = GetUsername(ID);
-	};
-	var arr = [];
-	var Names = [];
-    var emb = {};
-    emb.type = "rich";
-	for (var i = 0; i < Object.keys(obj).length; i++) {
-		var ID = Object.keys(obj)[i];
-		arr.push(obj[ID]);
-	}
-	var byAmount = arr.slice(0);
-	byAmount.sort(function(a,b) {
-		return b.Amount - a.Amount;
-	});
-    var lb = 0;
-    if (Rep.hasOwnProperty("rll")) {
-        if (Rep.rll === "Everybody") {
-            lb = Object.keys(obj).length;
-        } else if (Object.keys(obj).length < JSON.parse(Rep.rll)) {
-            lb = Object.keys(obj).length;
-        } else {
-            lb = JSON.parse(Rep.rll);
-            emb.title = "Showing *Top" + lb +"*:";
+    if (Object.keys(Rep).length > 2) {
+        var obj = sortObject(Rep);
+        delete obj.BanList;
+        delete obj.rll;
+        for (var i = 0; i < Object.keys(obj).length; i++) {
+            var ID = Object.keys(obj)[i];
+            obj[ID] = prs(obj[ID]);
+            obj[ID]["Name"] = GetUsername(ID);
+        };
+        var arr = [];
+        var Names = [];
+        var emb = {};
+        emb.description = "";
+        for (var i = 0; i < Object.keys(obj).length; i++) {
+            var ID = Object.keys(obj)[i];
+            arr.push(obj[ID]);
         }
-    } else {
-        lb = Object.keys(obj).length;
-    }
-    var ct = 1;
-	for (var i = 0; i < lb; i++) {
-        if (i > 0) {
-            if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
-                emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
-                lb++;
+        var byAmount = arr.slice(0);
+        byAmount.sort(function(a,b) {
+            return b.Amount - a.Amount;
+        });
+        var lb = 0;
+        if (Rep.hasOwnProperty("rll")) {
+            if (Rep.rll === "Everybody") {
+                lb = Object.keys(obj).length;
+            } else if (Object.keys(obj).length < JSON.parse(Rep.rll)) {
+                lb = Object.keys(obj).length;
             } else {
-                emb.description += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
-                ct++;
+                lb = JSON.parse(Rep.rll);
+                emb.title = "Showing *Top " + lb +"*:";
             }
         } else {
-            emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
-            lb++;
+            lb = Object.keys(obj).length;
         }
+        var ct = 1;
+        for (var i = 0; i < lb; i++) {
+            if (i > 0) {
+                if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
+                    emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                } else {
+                    emb.description += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                    ct++;
+                }
+            } else {
+                emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+            }
+        }
+        return emb;
+    } else {
+        var msg = "I couldn't find any users yet in the database."
+        return msg;
     }
-	return emb;
 }
