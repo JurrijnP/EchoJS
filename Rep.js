@@ -144,6 +144,9 @@ function repList() {
         var arr = [];
         var Names = [];
         var emb = {};
+        var Colors = ["FFC800", "FF0F7F", "FF0F1A", "2EF65C", "F5F404", "DA1E8", "FFA200", "D96AF2"];
+        var RandColor = Colors[(Math.floor(Math.random() * Colors.length) + 1)];
+        emb.color = HTML2Int(RandColor);
         emb.description = "";
         for (var i = 0; i < Object.keys(obj).length; i++) {
             var ID = Object.keys(obj)[i];
