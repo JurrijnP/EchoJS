@@ -9,24 +9,19 @@ function posRep() {
 	} else {
 		var d = new Date();
 		if (Rep.hasOwnProperty(UserID)) {
-            if ((JSON.parse(Rep[UserID]).Time + 15000) < d.getTime()) {
-                var obj = {
-                    "Amount": (prs(Rep[UserID])["Amount"] + 15),
-                    "Time": d.getTime()
-                };
-                Rep[UserID] = str(obj);
-                msg += "You have given <@" + UserID + "> 15 reputation points!";
-            } else {
-                msg += "This user has was repped less than 15 seconds ago.";
-            }
+			var obj = {
+				"Amount": (prs(Rep[UserID])["Amount"] + 15),
+				"Time": d.toString()
+			};
+			Rep[UserID] = str(obj);
 		} else {
 			var obj = {
 				"Amount": 15,
-				"Time": d.getTime()
+				"Time": d.toString()
 			};
 			Rep[UserID] = str(obj);
-            msg += "You have given <@" + UserID + "> 15 reputation points!";
 		}
+		msg += "You have given <@" + UserID + "> 15 reputation points!";
 	}
 	return msg;
 }
@@ -42,24 +37,19 @@ function negRep() {
 	} else {
 		var d = new Date();
 		if (Rep.hasOwnProperty(UserID)) {
-            if ((JSON.parse(Rep[UserID]).Time + 15000) < d.getTime()) {
-                var obj = {
-                    "Amount": (prs(Rep[UserID])["Amount"] - 15),
-                    "Time": d.getTime()
-                };
-                Rep[UserID] = str(obj);
-                msg += "You have taken 15 reputation points from <@" + UserID + ">.";
-            } else {
-                msg += "This user has was repped less than 15 seconds ago.";
-            }
+			var obj = {
+				"Amount": (prs(Rep[UserID])["Amount"] - 15),
+				"Time": d.toString()
+			};
+			Rep[UserID] = str(obj);
 		} else {
 			var obj = {
 				"Amount": -15,
-				"Time": d.getTime()
+				"Time": d.toString()
 			};
 			Rep[UserID] = str(obj);
-            msg += "You have taken 15 reputation points from <@" + UserID + ">.";
 		}
+		msg += "You have taken 15 reputation points from <@" + UserID + ">.";
 	}
 	return msg;
 }
