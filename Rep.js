@@ -190,7 +190,7 @@ function repList() {
         if (emb.description.length > 0) {
             if (ctn > 0) {
                 if (emb.description.length > 0) {
-                    emb.description += "\n*People with 0 reputation points are not shown.*"
+                    emb.description += "\n*People with 0 or a negative amount of reputation points are not shown.*"
                 }
             }
             return emb;
