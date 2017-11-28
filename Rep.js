@@ -1,63 +1,63 @@
 function posRep() {
-	msg = "";
-	if (RawUserID === UserID) {
-		msg += "Please mention somebody.";
-	} else if (JSON.parse(Rep["BanList"]).indexOf(RawUserID) > -1) {
+    msg = "";
+    if (RawUserID === UserID) {
+        msg += "Please mention somebody.";
+    } else if (JSON.parse(Rep["BanList"]).indexOf(RawUserID) > -1) {
         msg += "You are not allowed to use this.";
-	} else if (isBot() === true) {
-		msg += "Bots don't like reputation sorry.";
-	} else {
-		var d = new Date();
-		if (Rep.hasOwnProperty(UserID)) {
-			var obj = {
-				"Amount": (prs(Rep[UserID])["Amount"] + 15),
-				"Time": d.toString()
-			};
-			Rep[UserID] = str(obj);
-		} else {
-			var obj = {
-				"Amount": 15,
-				"Time": d.toString()
-			};
-			Rep[UserID] = str(obj);
-		}
-		msg += "You have given <@" + UserID + "> 15 reputation points!";
-	}
-	return msg;
+    } else if (isBot() === true) {
+        msg += "Bots don't like reputation sorry.";
+    } else {
+        var d = new Date();
+        if (Rep.hasOwnProperty(UserID)) {
+            var obj = {
+                "Amount": (prs(Rep[UserID])["Amount"] + 15),
+                "Time": d.toString()
+            };
+            Rep[UserID] = str(obj);
+        } else {
+            var obj = {
+                "Amount": 15,
+                "Time": d.toString()
+            };
+            Rep[UserID] = str(obj);
+        }
+        msg += "You have given <@" + UserID + "> 15 reputation points!";
+    }
+    return msg;
 }
 
 function negRep() {
-	msg = "";
-	if (RawUserID === UserID) {
-		msg += "Please mention somebody.";
-	} else if (JSON.parse(Rep["BanList"]).indexOf(RawUserID) > -1) {
+    msg = "";
+    if (RawUserID === UserID) {
+        msg += "Please mention somebody.";
+    } else if (JSON.parse(Rep["BanList"]).indexOf(RawUserID) > -1) {
         msg += "You are not allowed to use this.";
-	} else if (isBot() === true) {
-		msg += "Bots don't like reputation sorry.";
-	} else {
-		var d = new Date();
-		if (Rep.hasOwnProperty(UserID)) {
-			var obj = {
-				"Amount": (prs(Rep[UserID])["Amount"] - 15),
-				"Time": d.toString()
-			};
-			Rep[UserID] = str(obj);
-		} else {
-			var obj = {
-				"Amount": -15,
-				"Time": d.toString()
-			};
-			Rep[UserID] = str(obj);
-		}
-		msg += "You have taken 15 reputation points from <@" + UserID + ">.";
-	}
-	return msg;
+    } else if (isBot() === true) {
+        msg += "Bots don't like reputation sorry.";
+    } else {
+        var d = new Date();
+        if (Rep.hasOwnProperty(UserID)) {
+            var obj = {
+                "Amount": (prs(Rep[UserID])["Amount"] - 15),
+                "Time": d.toString()
+            };
+            Rep[UserID] = str(obj);
+        } else {
+            var obj = {
+                "Amount": -15,
+                "Time": d.toString()
+            };
+            Rep[UserID] = str(obj);
+        }
+        msg += "You have taken 15 reputation points from <@" + UserID + ">.";
+    }
+    return msg;
 }
 
 function repBan(Type) {
     var msg = "";
-	if (RawUserID === UserID) {
-		msg += "Please mention somebody";
+    if (RawUserID === UserID) {
+        msg += "Please mention somebody";
     };
     if (Type === "add") {
         if (MemberHasRole(RawUserID, "Management") === true && ChannelID === "365154401456881666" && MemberHasRole(UserID, "Staff") === false) {
@@ -172,7 +172,22 @@ function repList() {
         var ct = 1;
         var ctn = 0;
         for (var i = 0; i < lb; i++) {
-            if (byAmount[i]["Amount"] > 0) {
+            if (ChannelID !== "365154401456881666") {
+                if (byAmount[i]["Amount"] > 0) {
+                    if (i > 0) {
+                        if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
+                            emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                        } else {
+                            emb.description += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                            ct++;
+                        }
+                    } else {
+                        emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                    }
+                } else {
+                    ctn++;
+                }
+            } else {
                 if (i > 0) {
                     if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
                         emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
@@ -183,8 +198,6 @@ function repList() {
                 } else {
                     emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
                 }
-            } else {
-                ctn++;
             }
         }
         if (emb.description.length > 0) {
