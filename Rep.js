@@ -178,9 +178,6 @@ function repList() {
                         if (byAmount[i]["Amount"] === byAmount[(i - 1)]["Amount"]) {
                             emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
                         } else {
-                            if (ct === 3) {
-                                emb.description += "───────\n";
-                            }
                             emb.description += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
                             ct++;
                         }
