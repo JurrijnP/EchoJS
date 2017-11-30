@@ -179,6 +179,9 @@ function repList() {
                             emb.description += "**" + ct + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
                         } else {
                             emb.description += "**" + (ct + 1) + ".** " + byAmount[i]["Name"] + ": *" + byAmount[i]["Amount"] + "*\n";
+                            if ((ct + 1) === 4) {
+                                emb.description += "\n";
+                            }
                             ct++;
                         }
                     } else {
