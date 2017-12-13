@@ -1,5 +1,5 @@
 var newUser = {
-    "Name": "",
+    "Name": RawUsername,
     "Level": 1,
     "Cash": 1000,
     "Exp": 0,
