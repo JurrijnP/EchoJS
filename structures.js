@@ -2,6 +2,7 @@ var newUser = {
     "Name": "",
     "Level": 1,
     "Cash": 1000,
+    "Vault": 0,
     "Exp": 0,
     "totalExp": 0,
     "Games": {},
