@@ -17,3 +17,21 @@ var newUser = {
         "Heist": []
     }
 };
+
+var gameStats = {
+    "Played": 0,
+    "MoneyBet": 0,
+    "AveragePlaytime": 0,
+    "TotalDiffPlayers": 0
+};
+
+var GlobalStats = {
+    "TotalMoney": {
+        "Cash": 0,
+        "Bank": 0
+    },
+    "TotalPlayers": 0,
+    "TotalGamesPlayed": 0,
+    "DifferentGames": 0
+}
+    
