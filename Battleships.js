@@ -14,7 +14,7 @@ function defaultDatabase() {
 }
 
 function newGame() {
-    if (Battleships.newGame == false) {
+    if (prs(Battleships.newGame) === false) {
         Battleships.newGame = true;
         Battleships.newGameQ = RawUserID;
         msg = "<@" + RawUserID + ">, do you want to start a game of Battleships?\n(Answer within 1 minute or question will expire)\n{delme:1m}\n{ars:answerSniffer}";
