@@ -47,7 +47,7 @@ function newGameAnswer(Answer) {
     return msg;
 }
 
-function makeData(Player) {
+function makeData(p) {
     var Player = {
         "User": {
             "ID": "",
@@ -486,11 +486,11 @@ function makeData(Player) {
             ]
         }
     };
-    if (Player === 1) {
+    if (p === 1) {
         Player.User.ID = RawUserID;
         Player.User.Name = RawUsername;
         Battleships.P1 = JSON.stringify(Player);
-    } else if (Player === 2) {
+    } else if (p === 2) {
         Player.User.ID = Battleships.Invited.ID;
         Player.User.Name = Battleships.Invited.Name;
         Battleships.P2 = JSON.stringify(Player);
