@@ -6,10 +6,29 @@ function globalStats() {
         msg = "__**Possible commands for** `.gameStats <Sub command>`**:**__\n```\n- help     | Show all possible subcommands.\n- reset    | Resets global stats, Echo will ask for confirmation if global stats are present.\n- view     | Show the global stats.\n- create   | Creates global stats.\n- updatedb | Adds new sub-variables if found.\n- refresh  | Refreshes stats.```";
     } else if (Params.toLowerCase() === "reset") {
         if (Stats.hasOwnProperty("Global")) {
-            if (prs(Stats.Global) !== GlobalStats) {
+            var ct = 0;
+            var tObj = prs(Stats.Global);
+            for (i = 0; i < Object.keys(tObj).length; i++) {
+                if (Object.keys(tObj)[i] === "TotalMoney") {
+                    if (tObj.TotalMoney.Cash !== 0) {
+                        ct++;
+                    } else if (tObj.TotalMoney.Bank !== 0) { 
+                        ct++
+                    } else {
+                        continue;
+                    }
+                } else {
+                    if (tObj[Object.keys(tObj)[i]] !== 0) {
+                        ct++;
+                    } else {
+                        continue;
+                    }
+                }
+            }
+            if (ct > 0) {
                 msg = "Are you sure you want to reset global stats?\n(Type `.globalStats confirm` or `.globalStats cancel`)\n{ars:grSniffer}";
                 Stats.GlobalReset = RawUserID;
-            } else if (prs(Stats.Global) === GlobalStats) {
+            } else if (ct === 0) {
                 msg = "Global stats are already on default values, no further action.";
             }
         } else {
