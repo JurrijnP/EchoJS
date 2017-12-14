@@ -95,7 +95,7 @@ function RefreshGlobal() {
     // Total Money
     for (i = 0; i < Object.keys(MiniGameUsers).length; i++) {
         temp.TotalMoney.Cash += prs(MiniGameUsers[Object.keys(MiniGameUsers)[i]]).Cash;
-        temp.TotalMoney.Bank += prs(MiniGameUsers[Object.keys(MiniGameUsers)[i]]).Bank;
+        temp.TotalMoney.Vault += prs(MiniGameUsers[Object.keys(MiniGameUsers)[i]]).Vault;
     }
     temp.TotalPlayers = Object.keys(MiniGameUsers).length;
     Stats.Global = str(temp);
