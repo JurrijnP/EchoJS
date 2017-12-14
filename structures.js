@@ -29,7 +29,7 @@ var gameStats = {
 var GlobalStats = {
     "TotalMoney": {
         "Cash": 0,
-        "Bank": 0
+        "Vault": 0
     },
     "TotalPlayers": 0,
     "TotalGamesPlayed": 0,
