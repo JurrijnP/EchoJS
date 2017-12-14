@@ -4,7 +4,7 @@ var msg = "";
 function defaultDatabase() {
     Battleships.newGame = false;
     Battleships.Invite = str({});
-    const ob = {
+    var ob = {
         P1: 0,
         P2: 0
     };
