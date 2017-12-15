@@ -514,7 +514,7 @@ function Invite() {
             "Code": rnd
         };
         Battleships = str(Invite);
-        msg = "{redirect:390586644991967242}<@" + UserID ">, " + GetUsername(prs(Battleships.P1).User.ID) + "has invited you to play Battleships!\nType `b?invite accept " + rnd"` or `b?invite cancel` in <#390563316520452096> to answer.\n{msg:I have invited <@" + UserID + ">! (The invite will expire after 1 minute.)}\
+        msg = "{redirect:390586644991967242}<@" + UserID + ">, " + GetUsername(prs(Battleships.P1).User.ID) + "has invited you to play Battleships!\nType `b?invite accept " + rnd"` or `b?invite cancel` in <#390563316520452096> to answer.\n{msg:I have invited <@" + UserID + ">! (The invite will expire after 1 minute.)}\
 {channelperms:\
     {direct:" + UserID + "}\
     {channel:390563316520452096}\
