@@ -5,9 +5,21 @@ var newUser = {
     "Vault": 0,
     "Exp": 0,
     "totalExp": 0,
-    "Games": {},
+    "Games": {
+        "TriviaTown": {
+            "CorrectAnswers": 0,
+            "WrongAnswers": 0,
+            "WinStreak": 0,
+            "BestStreak": 0
+        },
+        "Battleships": {
+            "Wins": 0,
+            "Lost": 0,
+            "AveragePlaytime": [],
+            "TotalCashBet": 0
+        }
+    },
     "Cooldowns": {
-        "Battleships": {},
         "Heist": {
             "PreviousPayDay": 0,
             "PreviousVault": 0
