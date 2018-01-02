@@ -57,7 +57,7 @@ String.prototype.noSpace = function() {
     return this.replace(/\s/g, "");
 }
 
-// Echo's package used for JS does not have this prototype so I maid it myself.
+// Echo's package used for JS does not have this prototype so I made it myself.
 String.prototype.includes = function(Has, Start) {
     if (Object.keys(arguments).length === 1) {
         return RegExp(Has.regexConvert("String"), "g").test(this);
