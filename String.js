@@ -24,6 +24,9 @@ function str(Input) {
 	return JSON.stringify(Input);
 };
 
+// "Stringifies" or "Parses" any char that could mean something in a RegExp string.
+// Params.regexConvert("String");
+// Params.regexConvert("Parse");
 String.prototype.regexConvert = function(Type) {
     var rep = this;
     if (Type.toLowerCase() === "string") {
@@ -54,6 +57,7 @@ String.prototype.noSpace = function() {
     return this.replace(/\s/g, "");
 }
 
+// Echo's package used for JS does not have this prototype so I maid it myself.
 String.prototype.includes = function(Has, Start) {
     if (Object.keys(arguments).length === 1) {
         return RegExp(Has.regexConvert("String"), "g").test(this);
@@ -65,6 +69,8 @@ String.prototype.includes = function(Has, Start) {
         }
     }
 }
+
+// Following prototypes are used for markdown in Discord™.
 
 String.prototype.bold = function() {
     return ("**" + this + "**")
