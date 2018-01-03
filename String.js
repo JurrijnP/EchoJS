@@ -57,17 +57,70 @@ String.prototype.noSpace = function() {
     return this.replace(/\s/g, "");
 }
 
-// Echo's package used for JS does not have this prototype so I made it myself.
-String.prototype.includes = function(Has, Start) {
-    if (Object.keys(arguments).length === 1) {
-        return RegExp(Has.regexConvert("String"), "g").test(this);
-    } else if (Object.keys(arguments).length === 2) {
-        if (typeof arguments["1"] === "number") {
-            return RegExp(Has.regexConvert("String"), "g").test(this.substr(Start, this.length));
-        } else {
-            return "TypeError";
-        }
+//All prototypes Echo's package used for JS does not have.
+if (!String.prototype.includes) {
+  String.prototype.includes = function(search, start) {
+    "use strict";
+    if (typeof start !== "number") {
+      start = 0;
     }
+    
+    if (start + search.length > this.length) {
+      return false;
+    } else {
+      return this.indexOf(search, start) !== -1;
+    }
+  };
+}
+
+if (!String.prototype.endsWith) {
+	String.prototype.endsWith = function(search, this_len) {
+		if (this_len === undefined || this_len > this.length) {
+			this_len = this.length;
+		}
+        return this.substring(this_len - search.length, this_len) === search;
+	};
+}
+
+if (!String.prototype.startsWith) {
+	String.prototype.startsWith = function(search, pos) {
+		return this.substr(!pos || pos < 0 ? 0 : +pos, search.length) === search;
+	};
+}
+
+if (!String.prototype.repeat) {
+  String.prototype.repeat = function(count) {
+    "use strict";
+    if (this == null) {
+      throw new TypeError("can\"t convert " + this + " to object");
+    }
+    var str = "" + this;
+    count = +count;
+    if (count != count) {
+      count = 0;
+    }
+    if (count < 0) {
+      throw new RangeError("repeat count must be non-negative");
+    }
+    if (count == Infinity) {
+      throw new RangeError("repeat count must be less than infinity");
+    }
+    count = Math.floor(count);
+    if (str.length == 0 || count == 0) {
+      return "";
+    }
+    // Ensuring count is a 31-bit integer allows us to heavily optimize the
+    // main part. But anyway, most current (August 2014) browsers can"t handle
+    // strings 1 << 28 chars or longer, so:
+    if (str.length * count >= 1 << 28) {
+      throw new RangeError("repeat count must not overflow maximum string size");
+    }
+    var rpt = "";
+    for (var i = 0; i < count; i++) {
+      rpt += str;
+    }
+    return rpt;
+  }
 }
 
 // Following prototypes are used for markdown in Discord™.
